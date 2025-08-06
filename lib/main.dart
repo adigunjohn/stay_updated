@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:stay_updated/provider/app/routes.dart';
-import 'package:stay_updated/provider/app/application.dart';
-import 'package:stay_updated/provider/services/navigation_service.dart';
-import 'package:stay_updated/provider/ui/screens/bookmark/bookmark_view_model.dart';
-import 'package:stay_updated/provider/ui/screens/explore/explore_view_model.dart';
-import 'package:stay_updated/provider/ui/screens/home/home_view_model.dart';
-import 'package:stay_updated/provider/ui/screens/navigation/navigation_view_model.dart';
-import 'package:stay_updated/provider/ui/screens/news/news_view_model.dart';
-import 'package:stay_updated/provider/ui/screens/search/search_view_model.dart';
-import 'package:stay_updated/provider/ui/screens/splash_view.dart';
-import 'provider/app/locator.dart';
+import 'package:stay_updated/app/routes.dart';
+import 'package:stay_updated/app/application.dart';
+import 'package:stay_updated/services/navigation_service.dart';
+import 'package:stay_updated/ui/screens/bookmark/bookmark_view_model.dart';
+import 'package:stay_updated/ui/screens/explore/explore_view_model.dart';
+import 'package:stay_updated/ui/screens/home/home_view_model.dart';
+import 'package:stay_updated/ui/screens/navigation/navigation_view_model.dart';
+import 'package:stay_updated/ui/screens/news/news_view_model.dart';
+import 'package:stay_updated/ui/screens/search/search_view_model.dart';
+import 'package:stay_updated/ui/screens/splash_view.dart';
+import 'app/locator.dart';
 import 'package:provider/provider.dart';
 
-import 'provider/ui/screens/profile/profile_view_model.dart';
-import 'provider/ui/screens/settings/settings_view_model.dart';
-import 'provider/ui/screens/view_all/view_all_view_model.dart';
+import 'ui/screens/profile/profile_view_model.dart';
+import 'ui/screens/settings/settings_view_model.dart';
+import 'ui/screens/view_all/view_all_view_model.dart';
 
 void main() {
   Application.initializeApp();
