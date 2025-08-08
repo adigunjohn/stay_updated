@@ -38,7 +38,7 @@ class PreHomeView extends StatelessWidget {
               right: 30,
               child: SuButton(
                 text: 'Stay Updated',
-                buttonColor: Colors.white,
+                buttonColor: Theme.of(context).cardColor,
                 buttonTextColor: kCBlueColor,
                 buttonWidth: screenWidth(context) / 1.2,
                 radius: 30,

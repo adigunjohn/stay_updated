@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:stay_updated/ui/common/styles.dart';
 
 class SuTextField extends StatelessWidget {
-  const SuTextField({super.key, this.hintText, this.keyboardType, this.onChanged, required this.readOnly, this.controller});
+  const SuTextField({super.key, this.hintText, this.suffixIcon, this.prefixIcon, this.keyboardType, this.onChanged, required this.readOnly, this.controller, this.labelText});
 
   final String? hintText;
+  final String? labelText;
   final bool readOnly;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final void Function(String)? onChanged;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,7 +22,12 @@ class SuTextField extends StatelessWidget {
         style:  kTBodyText1.copyWith(color: Colors.black),
         onChanged: onChanged,
         keyboardType: keyboardType,
+        cursorColor: kCBlueColor,
         decoration: InputDecoration(
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
+          labelText: labelText,
+          labelStyle:  kTBodyText1.copyWith(color: kCNormalGreyColor, fontStyle: FontStyle.italic),
           hintText: hintText,
           hintStyle: kTBodyText1.copyWith(color: kCNormalGreyColor),
           filled: true,

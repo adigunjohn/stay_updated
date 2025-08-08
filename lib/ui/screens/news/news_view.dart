@@ -83,9 +83,10 @@ class NewsView extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     height: screenHeight(context) * 0.61,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      // color: Theme.of(context).cardColor,
+                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                     ),
                     child: SingleChildScrollView(
                       child: Padding(
@@ -101,14 +102,14 @@ class NewsView extends StatelessWidget {
                                   child: ClipOval(child: SvgPicture.asset('assets/svgs/news.svg')),
                                 ),
                                 const SizedBox(width: 4,),
-                                Text('CNN Indonesia', style: kTBodyText1.copyWith(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),),
+                                Text('CNN Indonesia', style: kTBodyText1.copyWith(color: Theme.of(context).iconTheme.color , fontSize: 20, fontWeight: FontWeight.bold),),
                                 const SizedBox(width: 4,),
                                 const Icon(Icons.verified_rounded,color: kCBlueColor,size: 15,),
                               ],
                             ),
                             const SizedBox(height: 15,),
                             Text('Alexander wears modified helmet while riding a horse on his way to the Old Town Road\nAlexander wears modified helmet while riding a horse on his way to the Old Town Road\n\nAlexander wears modified helmet while riding a horse on his way to the Old Town Road\n\nAlexander wears modified helmet while riding a horse on his way to the Old Town Road\nAlexander wears modified helmet while riding a horse on his way to the Old Town Road\nAlexander wears modified helmet while riding a horse on his way to the Old Town Road\n\nAlexander wears modified helmet while riding a horse on his way to the Old Town Road\n\nAlexander wears modified helmet while riding a horse on his way to the Old Town Road\nAlexander wears modified helmet while riding a horse on his way to the Old Town Road\nAlexander wears modified helmet while riding a horse on his way to the Old Town Road\n\nAlexander wears modified helmet while riding a horse on his way to the Old Town Road',
-                              style: kTBodyText1.copyWith(color: Colors.black),),
+                              style: kTBodyText1.copyWith(color: Theme.of(context).iconTheme.color,),),
                           ],
                         ),
                       ),

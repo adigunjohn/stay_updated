@@ -10,9 +10,21 @@ import 'package:stay_updated/ui/custom_widgets/su_textfield.dart';
 import 'package:stay_updated/ui/screens/profile/profile_view_model.dart';
 import '../../common/styles.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
   static const String id = 'ProfileView';
+
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //
+  // }
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfileViewModel>(
@@ -20,6 +32,8 @@ class ProfileView extends StatelessWidget {
         return PopScope(
           canPop: true,
           onPopInvoked: (value){
+            // if(model.emailReadOnly == false){model.emailController.clear();}
+            // if(model.nameReadOnly == false){ model.nameController.clear();}
             // model.updateEmailReadOnly(true);
             // model.updateNameReadOnly(true);
           },
@@ -37,7 +51,7 @@ class ProfileView extends StatelessWidget {
                           onTap: (){
                             locator<NavigationService>().pop();
                           },
-                          child: Icon(Icons.arrow_back,color: Colors.black,size: IconSize.menuButtonIcon,),),
+                          child: Icon(Icons.arrow_back,color: Theme.of(context).iconTheme.color,size: IconSize.menuButtonIcon,),),
                         const SizedBox(height: 10,),
                         const Text('Profile', style: kTBigText,),
                         SizedBox(

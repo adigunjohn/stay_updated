@@ -29,7 +29,7 @@ class ViewAllView extends StatelessWidget {
                         onTap: (){
                           locator<NavigationService>().pop();
                         },
-                          child: Icon(Icons.arrow_back,color: Colors.black,size: IconSize.menuButtonIcon,),),
+                          child: Icon(Icons.arrow_back,color: Theme.of(context).iconTheme.color,size: IconSize.menuButtonIcon,),),
                       const SizedBox(height: 10,),
                       Text(viewAll == ViewAll.breakingNews ? 'Breaking News' : 'Recommendation', style: kTBigText,),
                       // const SizedBox(height: 10,),

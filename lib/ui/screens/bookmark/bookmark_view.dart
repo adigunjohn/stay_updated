@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stay_updated/ui/common/styles.dart';
 
 class BookmarkView extends StatelessWidget {
   const BookmarkView({super.key});
@@ -8,7 +9,7 @@ class BookmarkView extends StatelessWidget {
     return const Scaffold(
       body: SafeArea(
         child: Center(
-          child: Text('Bookmark Screen'),
+          child: Text('Your bookmarked news articles will appear here [ coming soon ]', style: kTSubtitleText,textAlign: TextAlign.center,),
         ),
       ),
     );

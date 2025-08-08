@@ -25,7 +25,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,12 +35,12 @@ class _SplashViewState extends State<SplashView> {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
-                const Text('stay',
+                Text('stay',
                     textScaler: TextScaler.noScaling,
-                    style: kTSplashText),
+                    style: Theme.of(context).textTheme.displayLarge),
                 Text('Updated',
                     textScaler: TextScaler.noScaling,
-                    style: kTSplashText.copyWith(color: kCBlueColor, fontSize: 38)),
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(color: kCBlueColor, fontSize: 38)),
                 // const SizedBox(
                 //   width: 5.0,
                 // ),

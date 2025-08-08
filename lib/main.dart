@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stay_updated/app/routes.dart';
 import 'package:stay_updated/app/application.dart';
+import 'package:stay_updated/app/theme.dart';
 import 'package:stay_updated/services/navigation_service.dart';
 import 'package:stay_updated/ui/screens/bookmark/bookmark_view_model.dart';
 import 'package:stay_updated/ui/screens/explore/explore_view_model.dart';
@@ -45,10 +46,13 @@ class StayUpdatedApp extends StatelessWidget {
             navigatorKey: locator<NavigationService>().navigatorKey,
             onGenerateRoute: (settings) => generateRoute(settings),
             title: Application.appName,
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-              // useMaterial3: false,
-            ),
+            theme: locator<AppTheme>().lightTheme,
+            darkTheme: locator<AppTheme>().darkTheme,
+            themeMode: Provider.of<SettingsViewModel>(context).appThemeMode,
+            // theme: ThemeData(
+            //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            //   // useMaterial3: false,
+            // ),
             home: const SplashView(),
           );
         });
