@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -140,9 +139,10 @@ class _HomeViewState extends State<HomeView> {
                   const SizedBox(
                     height: 10,
                   ),
-                  AnimatedSmoothIndicator(
+                  if (model.breakingNews.isNotEmpty) AnimatedSmoothIndicator(
                       activeIndex: model.activeCarouselIndex,
                       count: model.breakingNews.length,
+                     // count: 17,
                       effect: ExpandingDotsEffect(
                         dotColor: kCGreyColor,
                         activeDotColor: kCBlueColor,
@@ -150,7 +150,7 @@ class _HomeViewState extends State<HomeView> {
                         dotHeight: 9,
                         expansionFactor: 2.5,
                       ),
-                      onDotClicked: (index) {}),
+                      onDotClicked: (index) {}) else const SizedBox.shrink(),
                   const SizedBox(
                     height: 25,
                   ),

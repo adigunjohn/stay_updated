@@ -16,7 +16,11 @@ class HomeViewModel extends ChangeNotifier {
   bool isRecommendationNewsLoading = false;
   String? recommendationsNewsErrorMessage;
 
-  List<News> breakingNews = [];
+  List<News> breakingNews = [
+    // News(author: 'author', content: 'content', description: 'description', publishedAt: '2025-08-03T21:00:22Z', sourceName: 'sourceName', title: 'title', url: 'url', urlImage: 'urlImage'),
+    // News(author: 'author', content: 'content', description: 'description', publishedAt: '2024-08-13T21:00:22Z', sourceName: 'sourceName', title: 'title', url: 'url', urlImage: 'urlImage'),
+    // News(author: 'author', content: 'content', description: 'description', publishedAt: '2025-07-13T21:00:22Z', sourceName: 'sourceName', title: 'title', url: 'url', urlImage: 'urlImage')
+  ];
   List<News> recommendation = [];
 
   Future<void> fetchBreakingNews() async {

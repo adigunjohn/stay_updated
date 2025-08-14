@@ -80,8 +80,8 @@ class _ExploreViewState extends State<ExploreView> {
                     child: IndexedStack(
                       index: model.tabIndex,
                       children: List.generate(
-                        model.tabNews.length,
-                        (index) => model.isExploreLoading == false
+                       model.tabNews.length,
+                            (index) => model.isExploreLoading == false
                             ? model.exploreErrorMessage == null
                                 ? Scrollbar(
                                     controller: model.scrollController,
