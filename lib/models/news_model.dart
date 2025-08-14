@@ -22,14 +22,14 @@ class News{
 
   factory News.fromJson(Map<String, dynamic> json){
     return News(
-        author: json['author'] ?? 'np',
-        content: json['content'] ?? 'np',
-        description: json['description'] ?? 'np',
-        publishedAt: json['publishedAt'] ?? 'np',
-        sourceName: json['source']['name'] ?? 'np',
-        title: json['title'] ?? 'np',
-        url: json['url'] ?? 'np',
-        urlImage: json['urlToImage'] ?? 'np'
+        author: json['author'] ?? 'unknown',
+        content: json['content'] ?? 'no content',
+        description: json['description'] ?? 'nil',
+        publishedAt: json['publishedAt'] ?? 'nil',
+        sourceName: json['source']['name'] ?? 'unknown',
+        title: json['title'] ?? 'nil',
+        url: json['url'] ?? 'https://www.google.com',
+        urlImage: json['urlToImage'] ?? 'https://placehold.jp/120x120.png' //?? 'np'
     );
   }
 }

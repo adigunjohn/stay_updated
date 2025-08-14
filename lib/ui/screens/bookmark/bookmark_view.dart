@@ -6,10 +6,10 @@ class BookmarkView extends StatelessWidget {
   static const String id = 'BookmarkView';
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
       body: SafeArea(
         child: Center(
-          child: Text('Your bookmarked news articles will appear here [ coming soon ]', style: kTSubtitleText,textAlign: TextAlign.center,),
+          child: Text('Your bookmarked news articles will appear here [ coming soon ]', style: kTSubtitleText.copyWith(fontSize: 10),textAlign: TextAlign.center,),
         ),
       ),
     );

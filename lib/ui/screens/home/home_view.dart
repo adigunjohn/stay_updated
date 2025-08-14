@@ -8,6 +8,7 @@ import 'package:stay_updated/services/navigation_service.dart';
 import 'package:stay_updated/ui/common/styles.dart';
 import 'package:stay_updated/ui/common/ui_helpers.dart';
 import 'package:stay_updated/ui/custom_widgets/carousel_widget.dart';
+import 'package:stay_updated/ui/custom_widgets/failed_text.dart';
 import 'package:stay_updated/ui/custom_widgets/menu_button.dart';
 import 'package:stay_updated/ui/custom_widgets/recommendation_card.dart';
 import 'package:stay_updated/ui/screens/home/home_view_model.dart';
@@ -17,9 +18,24 @@ import 'package:stay_updated/ui/screens/settings/settings_view.dart';
 import 'package:stay_updated/ui/screens/view_all/view_all_view.dart';
 import 'package:stay_updated/ui/screens/view_all/view_all_view_model.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
   static const String id = 'HomeView';
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 1), () {
+      Provider.of<HomeViewModel>(context, listen: false).fetchBreakingNews();
+      Provider.of<HomeViewModel>(context, listen: false)
+          .fetchRecommendationNews();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +46,7 @@ class HomeView extends StatelessWidget {
             width: screenWidth(context),
             height: screenHeight(context),
             child: Padding(
-              padding: const EdgeInsets.only(top: 25.0, right: 0, left: 0),
+              padding: const EdgeInsets.only(top: 25.01, right: 0, left: 0),
               child: Column(
                 children: [
                   Padding(
@@ -41,7 +57,8 @@ class HomeView extends StatelessWidget {
                         MenuButton(
                           icon: Icons.person_rounded,
                           onTap: () {
-                            locator<NavigationService>().pushNamed(ProfileView.id);
+                            locator<NavigationService>()
+                                .pushNamed(ProfileView.id);
                           },
                         ),
                         Row(
@@ -50,7 +67,8 @@ class HomeView extends StatelessWidget {
                             MenuButton(
                               icon: Icons.search_rounded,
                               onTap: () {
-                                locator<NavigationService>().pushNamed(SearchView.id);
+                                locator<NavigationService>()
+                                    .pushNamed(SearchView.id);
                               },
                             ),
                             const SizedBox(
@@ -59,7 +77,8 @@ class HomeView extends StatelessWidget {
                             MenuButton(
                               icon: Icons.settings,
                               onTap: () {
-                                locator<NavigationService>().pushNamed(SettingsView.id);
+                                locator<NavigationService>()
+                                    .pushNamed(SettingsView.id);
                               },
                             ),
                           ],
@@ -81,11 +100,15 @@ class HomeView extends StatelessWidget {
                         ),
                         InkWell(
                             onTap: () {
-                              locator<NavigationService>().push(const ViewAllView(viewAll: ViewAll.breakingNews,));
+                              locator<NavigationService>()
+                                  .push(const ViewAllView(
+                                viewAll: ViewAll.breakingNews,
+                              ));
                             },
                             child: Text(
                               'View all',
-                              style: kTBoldSubtitleText.copyWith(color: kCBlueColor),
+                              style: kTBoldSubtitleText.copyWith(
+                                  color: kCBlueColor),
                             )),
                       ],
                     ),
@@ -93,13 +116,33 @@ class HomeView extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const CarouselWidget(),
+                  if (model.isBreakingNewsLoading == false)
+                    model.breakingNewsErrorMessage == null
+                        ? const CarouselWidget()
+                        : SizedBox(
+                            height: 220,
+                            child: FailedText(
+                              tag: 'breaking',
+                              onTap: () {
+                                model.fetchBreakingNews();
+                              },
+                            ))
+                  else
+                    const SizedBox(
+                      height: 220,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: kCBlueColor,
+                          strokeWidth: 4,
+                        ),
+                      ),
+                    ),
                   const SizedBox(
                     height: 10,
                   ),
                   AnimatedSmoothIndicator(
                       activeIndex: model.activeCarouselIndex,
-                      count: model.carouselImages.length,
+                      count: model.breakingNews.length,
                       effect: ExpandingDotsEffect(
                         dotColor: kCGreyColor,
                         activeDotColor: kCBlueColor,
@@ -122,11 +165,15 @@ class HomeView extends StatelessWidget {
                         ),
                         InkWell(
                             onTap: () {
-                              locator<NavigationService>().push(const ViewAllView(viewAll: ViewAll.recommendation,));
+                              locator<NavigationService>()
+                                  .push(const ViewAllView(
+                                viewAll: ViewAll.recommendation,
+                              ));
                             },
                             child: Text(
                               'View all',
-                              style: kTBoldSubtitleText.copyWith(color: kCBlueColor),
+                              style: kTBoldSubtitleText.copyWith(
+                                  color: kCBlueColor),
                             )),
                       ],
                     ),
@@ -134,17 +181,47 @@ class HomeView extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: 5,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (_, index) {
-                          return const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15.0),
-                            child: RecommendationCard(),
-                          );
-                        }),
-                  )
+                  if (model.isRecommendationNewsLoading == false)
+                    model.recommendationsNewsErrorMessage == null
+                        ? Expanded(
+                            child: Scrollbar(
+                              controller: model.scrollController,
+                              thickness: 6.0,
+                              radius: const Radius.circular(8.0),
+                              child: ListView.builder(
+                                  itemCount: model.recommendation.length,
+                                  scrollDirection: Axis.vertical,
+                                  itemBuilder: (_, index) {
+                                    final news = model.recommendation[index];
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0),
+                                      child: RecommendationCard(
+                                        news: news,
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          )
+                        : Expanded(
+                            child: FailedText(
+                              tag: 'recommended',
+                              onTap: () {
+                                model.fetchRecommendationNews();
+                              },
+                            ),
+                          )
+                  else
+                    const Expanded(
+                      child: SizedBox(
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: kCBlueColor,
+                            strokeWidth: 4,
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

@@ -12,36 +12,43 @@ const TextStyle kTSplashText = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 31,
     fontFamily: AppStrings.poppins,
-    fontStyle: FontStyle.italic
+    fontStyle: FontStyle.italic,
+  overflow: TextOverflow.ellipsis
 );
 const TextStyle kTButtonText = TextStyle(
     // fontWeight: FontWeight.bold,
     fontSize: 19,
     fontFamily: AppStrings.poppins,
+    overflow: TextOverflow.ellipsis
 );
 const TextStyle kTTitleText = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 23,
   fontFamily: AppStrings.poppins,
+    overflow: TextOverflow.ellipsis
 );
 const TextStyle kTBigText = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 27,
   fontFamily: AppStrings.poppins,
+    overflow: TextOverflow.ellipsis
 );
 const TextStyle kTBoldSubtitleText = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 15,
   fontFamily: AppStrings.poppins,
+    overflow: TextOverflow.ellipsis
 );
 const TextStyle kTSubtitleText = TextStyle(
   fontWeight: FontWeight.w600,
   fontSize: 15,
   fontFamily: AppStrings.poppins,
+    overflow: TextOverflow.ellipsis
 );
 const TextStyle kTBodyText1 = TextStyle(
   color: Colors.white,
   // fontWeight: FontWeight.bold,
   fontSize: 14,
   fontFamily: AppStrings.poppins,
+    overflow: TextOverflow.ellipsis
 );

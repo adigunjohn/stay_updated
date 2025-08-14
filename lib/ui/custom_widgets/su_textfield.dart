@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stay_updated/ui/common/styles.dart';
 
 class SuTextField extends StatelessWidget {
-  const SuTextField({super.key, this.hintText, this.suffixIcon, this.prefixIcon, this.keyboardType, this.onChanged, required this.readOnly, this.controller, this.labelText});
+  const SuTextField({super.key, this.hintText, this.suffixIcon, this.onSubmitted, this.prefixIcon, this.keyboardType, this.onChanged, this.onEditingComplete, required this.readOnly, this.controller, this.labelText});
 
   final String? hintText;
   final String? labelText;
@@ -10,6 +10,8 @@ class SuTextField extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final void Function(String)? onChanged;
+  final void Function(String)? onSubmitted;
+  final void Function()? onEditingComplete;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   @override
@@ -21,6 +23,8 @@ class SuTextField extends StatelessWidget {
         readOnly: readOnly ,
         style:  kTBodyText1.copyWith(color: Colors.black),
         onChanged: onChanged,
+        onSubmitted: onSubmitted,
+        onEditingComplete: onEditingComplete,
         keyboardType: keyboardType,
         cursorColor: kCBlueColor,
         decoration: InputDecoration(

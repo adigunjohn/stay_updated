@@ -8,6 +8,7 @@ import 'package:stay_updated/ui/screens/explore/explore_view.dart';
 import 'package:stay_updated/ui/screens/home/home_view.dart';
 import 'package:stay_updated/ui/screens/navigation/navigation_view_model.dart';
 
+
 class NavigationView extends StatelessWidget {
   const NavigationView({super.key});
   static const String id = 'NavigationView';
