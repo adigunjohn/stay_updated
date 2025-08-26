@@ -17,7 +17,7 @@ import 'ui/screens/profile/profile_view_model.dart';
 import 'ui/screens/settings/settings_view_model.dart';
 import 'ui/screens/view_all/view_all_view_model.dart';
 
-void main() {
+void main() async{
   Application.initializeApp();
   runApp(const StayUpdatedApp());
 }

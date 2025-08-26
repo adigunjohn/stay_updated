@@ -8,7 +8,7 @@ import 'package:stay_updated/ui/common/ui_helpers.dart';
 import 'package:stay_updated/ui/custom_widgets/menu_button.dart';
 import 'package:stay_updated/ui/screens/news/news_view_model.dart';
 
-import '../../../models/news_model.dart';
+import '../../../models/news.dart';
 
 class NewsView extends StatelessWidget {
   const NewsView({super.key, this.news});

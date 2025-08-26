@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:stay_updated/ui/common/strings.dart';
 
 import '../../../app/locator.dart';
-import '../../../models/news_model.dart';
+import '../../../models/news.dart';
 import '../../../services/http_service.dart';
 
 class SearchViewModel extends ChangeNotifier {

@@ -8,7 +8,7 @@ import 'package:stay_updated/ui/common/ui_helpers.dart';
 import 'package:stay_updated/ui/screens/home/home_view_model.dart';
 import 'package:stay_updated/ui/screens/news/news_view.dart';
 
-import '../../models/news_model.dart';
+import '../../models/news.dart';
 // import 'package:flutter/material.dart' hide CarouselController;
 
 class CarouselWidget extends StatelessWidget {

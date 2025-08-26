@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stay_updated/app/locator.dart';
-import 'package:stay_updated/models/news_model.dart';
+import 'package:stay_updated/models/news.dart';
 import 'package:stay_updated/services/navigation_service.dart';
 import 'package:stay_updated/ui/common/styles.dart';
 import 'package:stay_updated/ui/common/ui_helpers.dart';

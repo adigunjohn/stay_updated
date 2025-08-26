@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:stay_updated/app/locator.dart';
-import 'package:stay_updated/models/news_model.dart';
+import 'package:stay_updated/models/news.dart';
 import 'package:stay_updated/services/http_service.dart';
 import 'package:stay_updated/ui/common/strings.dart';
 
