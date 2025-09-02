@@ -7,7 +7,10 @@ class HttpService {
 
   Future<dynamic> fetchNews(String url) async {
     try{
-      http.Response response = await http.get(Uri.parse(url),);
+      http.Response response = await http.get(Uri.parse(url),).timeout(const Duration(seconds: 7), onTimeout: () {
+        log('10 seconds over, aborted API function');
+        throw Exception("Connection timeout, poor internet");
+      });
       log('${response.statusCode}');
       ExceptionHandler.checkStatusCode(response.statusCode);
       if (response.statusCode == 200 || response.statusCode == 204 || response.statusCode == 201 || response.statusCode == 202 || response.statusCode == 203) {
@@ -29,6 +32,5 @@ class HttpService {
 
 
 }
-
 
 ///flutter build apk --split-per-abi

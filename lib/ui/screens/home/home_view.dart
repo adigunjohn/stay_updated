@@ -1,4 +1,3 @@
-
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,7 @@ import 'package:stay_updated/ui/common/ui_helpers.dart';
 import 'package:stay_updated/ui/custom_widgets/carousel_widget.dart';
 import 'package:stay_updated/ui/custom_widgets/failed_text.dart';
 import 'package:stay_updated/ui/custom_widgets/menu_button.dart';
+import 'package:stay_updated/ui/custom_widgets/no_internet.dart';
 import 'package:stay_updated/ui/custom_widgets/recommendation_card.dart';
 import 'package:stay_updated/ui/screens/home/home_view_model.dart';
 import 'package:stay_updated/ui/screens/profile/profile_view.dart';
@@ -34,7 +34,16 @@ class _HomeViewState extends State<HomeView> {
       Provider.of<HomeViewModel>(context, listen: false)
           .fetchRecommendationNews();
     });
+    // _fetchHomeData();
   }
+
+  // Future<void> _fetchHomeData() async {
+  //   if (!mounted) return;
+  //   final model = Provider.of<HomeViewModel>(context, listen: false);
+  //   await model.fetchBreakingNews();
+  //   if (!mounted) return;
+  //   await model.fetchRecommendationNews();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -99,10 +108,12 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         InkWell(
                             onTap: () {
-                              locator<NavigationService>()
-                                  .push(const ViewAllView(
-                                viewAll: ViewAll.breakingNews,
-                              ));
+                             if(model.breakingNews.isNotEmpty){
+                               locator<NavigationService>()
+                                   .push(const ViewAllView(
+                                 viewAll: ViewAll.breakingNews,
+                               ));
+                             }
                             },
                             child: Text(
                               'View all',
@@ -115,42 +126,51 @@ class _HomeViewState extends State<HomeView> {
                   const SizedBox(
                     height: 20,
                   ),
-                  if (model.isBreakingNewsLoading == false)
-                    model.breakingNewsErrorMessage == null
-                        ? const CarouselWidget()
-                        : SizedBox(
-                            height: 220,
-                            child: FailedText(
-                              tag: 'breaking',
-                              onTap: () {
-                                model.fetchBreakingNews();
-                              },
-                            ))
-                  else
-                    const SizedBox(
-                      height: 220,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: kCBlueColor,
-                          strokeWidth: 4,
-                        ),
-                      ),
-                    ),
+                  model.isConnected == false
+                      ? NoInternet(
+                          onPressed: () {
+                            model.fetchBreakingNews();
+                          },
+                        )
+                      : model.isBreakingNewsLoading == false
+                          ? model.breakingNewsErrorMessage == null
+                              ? const CarouselWidget()
+                              : SizedBox(
+                                  height: 220,
+                                  child: FailedText(
+                                    tag: 'breaking',
+                                    onTap: () {
+                                      model.fetchBreakingNews();
+                                    },
+                                  ),
+                                )
+                          : const SizedBox(
+                              height: 220,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: kCBlueColor,
+                                  strokeWidth: 4,
+                                ),
+                              ),
+                            ),
                   const SizedBox(
                     height: 10,
                   ),
-                  if (model.breakingNews.isNotEmpty) AnimatedSmoothIndicator(
-                      activeIndex: model.activeCarouselIndex,
-                      count: model.breakingNews.length,
-                     // count: 17,
-                      effect: ExpandingDotsEffect(
-                        dotColor: kCGreyColor,
-                        activeDotColor: kCBlueColor,
-                        dotWidth: 9,
-                        dotHeight: 9,
-                        expansionFactor: 2.5,
-                      ),
-                      onDotClicked: (index) {}) else const SizedBox.shrink(),
+                  if (model.breakingNews.isNotEmpty)
+                    AnimatedSmoothIndicator(
+                        activeIndex: model.activeCarouselIndex,
+                        count: model.breakingNews.length,
+                        // count: 17,
+                        effect: ExpandingDotsEffect(
+                          dotColor: kCGreyColor,
+                          activeDotColor: kCBlueColor,
+                          dotWidth: 9,
+                          dotHeight: 9,
+                          expansionFactor: 2.5,
+                        ),
+                        onDotClicked: (index) {})
+                  else
+                    const SizedBox.shrink(),
                   const SizedBox(
                     height: 25,
                   ),
@@ -165,10 +185,12 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         InkWell(
                             onTap: () {
-                              locator<NavigationService>()
-                                  .push(const ViewAllView(
-                                viewAll: ViewAll.recommendation,
-                              ));
+                              if(model.recommendation.isNotEmpty){
+                                locator<NavigationService>()
+                                    .push(const ViewAllView(
+                                  viewAll: ViewAll.recommendation,
+                                ));
+                              }
                             },
                             child: Text(
                               'View all',
@@ -181,47 +203,52 @@ class _HomeViewState extends State<HomeView> {
                   const SizedBox(
                     height: 16,
                   ),
-                  if (model.isRecommendationNewsLoading == false)
-                    model.recommendationsNewsErrorMessage == null
-                        ? Expanded(
-                            child: Scrollbar(
-                              controller: model.scrollController,
-                              thickness: 6.0,
-                              radius: const Radius.circular(8.0),
-                              child: ListView.builder(
-                                  itemCount: model.recommendation.length,
-                                  scrollDirection: Axis.vertical,
-                                  itemBuilder: (_, index) {
-                                    final news = model.recommendation[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15.0),
-                                      child: RecommendationCard(
-                                        news: news,
-                                      ),
-                                    );
-                                  }),
-                            ),
-                          )
-                        : Expanded(
-                            child: FailedText(
-                              tag: 'recommended',
-                              onTap: () {
-                                model.fetchRecommendationNews();
-                              },
-                            ),
-                          )
-                  else
-                    const Expanded(
-                      child: SizedBox(
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: kCBlueColor,
-                            strokeWidth: 4,
-                          ),
-                        ),
-                      ),
-                    ),
+                  model.isConnected == true
+                      ? model.isRecommendationNewsLoading == false
+                          ? model.recommendationsNewsErrorMessage == null
+                              ? Expanded(
+                                  child: Scrollbar(
+                                    controller: model.scrollController,
+                                    thickness: 6.0,
+                                    radius: const Radius.circular(8.0),
+                                    child: ListView.builder(
+                                        itemCount: model.recommendation.length,
+                                        scrollDirection: Axis.vertical,
+                                        itemBuilder: (_, index) {
+                                          final news =
+                                              model.recommendation[index];
+                                          return Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15.0),
+                                            child: RecommendationCard(
+                                              news: news,
+                                            ),
+                                          );
+                                        }),
+                                  ),
+                                )
+                              : Expanded(
+                                  child: FailedText(
+                                    tag: 'recommended',
+                                    onTap: () {
+                                      model.fetchRecommendationNews();
+                                    },
+                                  ),
+                                )
+                          : const Expanded(
+                              child: SizedBox(
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: kCBlueColor,
+                                    strokeWidth: 4,
+                                  ),
+                                ),
+                              ),
+                            ) : NoInternet(
+                    onPressed: () {
+                      model.fetchRecommendationNews();
+                    },
+                  ),
                 ],
               ),
             ),

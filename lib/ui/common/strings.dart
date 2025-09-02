@@ -2,9 +2,10 @@ class AppStrings{
   static const String poppins = 'Poppins';
   static const String randomName = 'Jane Doe';
   static const String stayUpdated = 'Stay Updated';
-  static const String stayUpdatedLocalStorage = 'stayUpdatedLocalStorage'; //for Hive box
+  static const String bookmarkedNews = 'bookMarkedNews'; //for Hive box
+  static const String offlineNews = 'OfflineNews'; //for Hive box
   static const String themeSettings = 'ThemeSettingsStorage'; //for Hive box
-  static const String themeIndex = 'ThemeIndex';
+  static const String themeKey = 'ThemeKey';
 
   ///API strings
   static const String endpoint = 'https://newsapi.org/v2/';

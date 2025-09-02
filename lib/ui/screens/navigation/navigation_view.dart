@@ -9,10 +9,20 @@ import 'package:stay_updated/ui/screens/home/home_view.dart';
 import 'package:stay_updated/ui/screens/navigation/navigation_view_model.dart';
 
 
-class NavigationView extends StatelessWidget {
+class NavigationView extends StatefulWidget {
   const NavigationView({super.key});
   static const String id = 'NavigationView';
 
+  @override
+  State<NavigationView> createState() => _NavigationViewState();
+}
+
+class _NavigationViewState extends State<NavigationView> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<NavigationViewModel>(context, listen: false).checkInternetConnection();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<NavigationViewModel>(

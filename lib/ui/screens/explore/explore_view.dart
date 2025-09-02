@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stay_updated/ui/common/styles.dart';
 import 'package:stay_updated/ui/common/ui_helpers.dart';
 import 'package:stay_updated/ui/custom_widgets/failed_text.dart';
+import 'package:stay_updated/ui/custom_widgets/no_internet.dart';
 import 'package:stay_updated/ui/custom_widgets/recommendation_card.dart';
 import 'package:stay_updated/ui/custom_widgets/tabbar_widget.dart';
 import 'package:stay_updated/ui/screens/explore/explore_view_model.dart';
@@ -19,12 +20,18 @@ class _ExploreViewState extends State<ExploreView> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 1), () async {
-      await Provider.of<ExploreViewModel>(context, listen: false)
-          .fetchExploreNews();
-      Provider.of<ExploreViewModel>(context, listen: false).addAllList();
-    });
+      Future.delayed(const Duration(seconds: 1), () async {
+        await Provider.of<ExploreViewModel>(context, listen: false)
+            .fetchExploreNews();
+      });
+    // _fetchExploreData();
   }
+
+  // Future<void> _fetchExploreData() async {
+  //   if (!mounted) return;
+  //   final model = Provider.of<ExploreViewModel>(context, listen: false);
+  //   await model.fetchExploreNews();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -76,14 +83,30 @@ class _ExploreViewState extends State<ExploreView> {
                   const SizedBox(
                     height: 12,
                   ),
-                  Expanded(
-                    child: IndexedStack(
-                      index: model.tabIndex,
-                      children: List.generate(
-                       model.tabNews.length,
-                            (index) => model.isExploreLoading == false
-                            ? model.exploreErrorMessage == null
-                                ? Scrollbar(
+                  model.isConnected == false ? NoInternet(
+                    onPressed: (){
+                      model.fetchExploreNews();
+                    },
+                  ) : Expanded(
+                    child: model.isExploreLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: kCBlueColor,
+                              strokeWidth: 4,
+                            ),
+                          )
+                        : model.exploreErrorMessage != null
+                            ? FailedText(
+                                tag: 'xplore',
+                                onTap: () async {
+                                  await model.fetchExploreNews();
+                                },
+                              )
+                            : IndexedStack(
+                                index: model.tabIndex,
+                                children: List.generate(
+                                  model.tabNews.length,
+                                  (index) => Scrollbar(
                                     controller: model.scrollController,
                                     thickness: 6.0,
                                     radius: const Radius.circular(8.0),
@@ -91,27 +114,12 @@ class _ExploreViewState extends State<ExploreView> {
                                       itemCount: model.tabNews[index].length,
                                       itemBuilder: (_, i) {
                                         final news = model.tabNews[index];
-                                        return RecommendationCard(
-                                            news: news[i]);
+                                        return RecommendationCard(news: news[i]);
                                       },
                                     ),
-                                  )
-                                : FailedText(
-                                    tag: '',
-                                    onTap: () async {
-                                      await model.fetchExploreNews();
-                                    },
-                                  )
-                            : const SizedBox(
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: kCBlueColor,
-                                    strokeWidth: 4,
                                   ),
                                 ),
                               ),
-                      ),
-                    ),
                   ),
                 ],
               ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stay_updated/ui/common/styles.dart';
 import 'package:stay_updated/ui/custom_widgets/failed_text.dart';
+import 'package:stay_updated/ui/custom_widgets/no_internet.dart';
 import 'package:stay_updated/ui/custom_widgets/recommendation_card.dart';
 import 'package:stay_updated/ui/custom_widgets/su_textfield.dart';
 import 'package:stay_updated/ui/screens/search/search_view_model.dart';
@@ -112,11 +113,15 @@ class SearchView extends StatelessWidget {
                       Expanded(
                         child: Visibility(
                           visible: model.isVisible,
-                          child: Column(
+                          child: model.isConnected == false ? NoInternet(
+                            onPressed: (){
+                              model.checkInternetConnection();
+                            },
+                          ) : Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Search Results (${model.searchResult.length}): \'${model.searchedWord}\' based on ${model.selectedFilterCategory}',
+                                'Search Results (${model.searchResult.length}): \'${model.searchedWord ?? ''}\' based on ${model.selectedFilterCategory}',
                                 style: kTButtonText.copyWith(fontSize: 14),
                               ),
                               const SizedBox(
@@ -143,7 +148,7 @@ class SearchView extends StatelessWidget {
                                                 }),
                                           )
                                         : FailedText(
-                                            tag: model.searchedWord,
+                                            tag: 'searched',
                                             onTap: () {
                                               model.fetchSearchResult();
                                             },

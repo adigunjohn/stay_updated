@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:stay_updated/services/connectivity_service.dart';
 import 'package:stay_updated/ui/common/strings.dart';
 
 import '../../../app/locator.dart';
@@ -40,30 +41,39 @@ class SearchViewModel extends ChangeNotifier {
   List<News> searchResult =[];
 
   Future<void> fetchSearchResult() async {
-    isVisible = true;
-    isSearchLoading = true;
-    searchErrorMessage = null;
-    notifyListeners();
-    try{
-      if(searchController.text.isNotEmpty){
-        searchedWord = searchController.text;
-        final fetchedSearchNews = await api.fetchNews(AppStrings.searchEndpoint(query: searchController.text, filter: selectedFilterCategory));
-        List<dynamic> result = fetchedSearchNews['articles'];
-        searchResult = result.map((e)=> News.fromJson(e)).toList();
-        log('search news fetch -- message: ${searchResult.length}');
+    await checkInternetConnection();
+    if(isConnected == true){
+      isVisible = true;
+      isSearchLoading = true;
+      searchErrorMessage = null;
+      notifyListeners();
+      try{
+        if(searchController.text.isNotEmpty){
+          searchedWord = searchController.text;
+          final fetchedSearchNews = await api.fetchNews(AppStrings.searchEndpoint(query: searchController.text, filter: selectedFilterCategory));
+          List<dynamic> result = fetchedSearchNews['articles'];
+          searchResult = result.map((e)=> News.fromJson(e)).toList();
+          log('search news fetch -- message: ${searchResult.length}');
+        }
+        else{
+          log('search news fetch -- message: the query parameter is empty');
+        }
       }
-      else{
-        log('search news fetch -- message: the query parameter is empty');
+      catch(e){
+        searchErrorMessage = e.toString();
+        log('search news fetch -- message: $e');
       }
+      finally{
+        isSearchLoading = false;
+      }
+      notifyListeners();
     }
-    catch(e){
-      searchErrorMessage = e.toString();
-      log('search news fetch -- message: $e');
-    }
-    finally{
-      isSearchLoading = false;
-    }
-    notifyListeners();
   }
 
+  bool? isConnected;
+  Future<void> checkInternetConnection() async{
+    final value = await ConnectivityService.hasInternetConnection();
+    isConnected = value;
+    notifyListeners();
+  }
 }

@@ -10,7 +10,7 @@ class FailedText extends StatelessWidget {
     return Center(child: GestureDetector(
       onTap: onTap,
       child: Text(
-        'failed to load $tag news, click to retry!',
+        'failed to load $tag news, tap to retry!',
         style: kTBoldSubtitleText.copyWith(
             color: kCBlueColor, decoration: TextDecoration.underline),),
     ),);

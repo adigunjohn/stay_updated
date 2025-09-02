@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stay_updated/app/routes.dart';
 import 'package:stay_updated/app/application.dart';
 import 'package:stay_updated/app/theme.dart';
@@ -12,13 +13,12 @@ import 'package:stay_updated/ui/screens/search/search_view_model.dart';
 import 'package:stay_updated/ui/screens/splash_view.dart';
 import 'app/locator.dart';
 import 'package:provider/provider.dart';
-
 import 'ui/screens/profile/profile_view_model.dart';
 import 'ui/screens/settings/settings_view_model.dart';
 import 'ui/screens/view_all/view_all_view_model.dart';
 
 void main() async{
-  Application.initializeApp();
+  await Application.initializeApp();
   runApp(const StayUpdatedApp());
 }
 
@@ -26,9 +26,9 @@ class StayUpdatedApp extends StatelessWidget {
   const StayUpdatedApp({super.key});
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setPreferredOrientations(
-    //   [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown,],
-    // );
+    SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown,],
+    );
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<HomeViewModel>(create: (_) => HomeViewModel()),

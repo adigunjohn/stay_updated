@@ -7,7 +7,7 @@ import 'package:stay_updated/ui/common/strings.dart';
 class Application {
   static const String appName = AppStrings.stayUpdated;
 
-  static void initializeApp() async{
+  static Future<void> initializeApp() async{
     WidgetsFlutterBinding.ensureInitialized();
     setupLocator();
     await HiveService.initializeHive();

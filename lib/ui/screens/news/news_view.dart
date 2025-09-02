@@ -6,6 +6,7 @@ import 'package:stay_updated/services/navigation_service.dart';
 import 'package:stay_updated/ui/common/styles.dart';
 import 'package:stay_updated/ui/common/ui_helpers.dart';
 import 'package:stay_updated/ui/custom_widgets/menu_button.dart';
+import 'package:stay_updated/ui/screens/bookmark/bookmark_view_model.dart';
 import 'package:stay_updated/ui/screens/news/news_view_model.dart';
 
 import '../../../models/news.dart';
@@ -72,9 +73,10 @@ class NewsView extends StatelessWidget {
                           MenuButton(
                             color: Colors.black45,
                             iconColor: Colors.white,
-                            icon: Icons.bookmark_border_outlined,
+                            icon: model.checkIfNewsIsBookmarked(news!) ? Icons.bookmark_outlined : Icons.bookmark_border_outlined,///not done
                             onTap: () {
-                              // do something
+                              model.saveNews(news!);
+                              Provider.of<BookmarkViewModel>(context, listen: false).fetchSavedNews();
                             },
                           ),
                         ],

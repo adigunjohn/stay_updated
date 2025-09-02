@@ -3,6 +3,7 @@ import 'package:stay_updated/app/theme.dart';
 import 'package:stay_updated/services/hive_service.dart';
 import 'package:stay_updated/services/http_service.dart';
 import 'package:stay_updated/services/navigation_service.dart';
+import 'package:stay_updated/services/snackbar_service.dart';
 
 GetIt locator = GetIt.instance;
 void setupLocator(){
@@ -10,4 +11,5 @@ void setupLocator(){
   locator.registerLazySingleton(() => AppTheme());
   locator.registerLazySingleton(() => HttpService());
   locator.registerLazySingleton(() => HiveService());
+  locator.registerLazySingleton(() => SnackbarService());
 }
